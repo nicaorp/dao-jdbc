@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -95,6 +98,52 @@ public class HeroDaoJDBC implements HeroDao {
 	public List<Hero> findAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<Hero> findByDepartment(Class clas) {
+		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT hero.*, class.Name as ClassName "
+					+ "FROM hero INNER JOIN class "
+					+ "ON hero.ClassId = class.Id "
+					+ "WHERE ClassId = ? "
+					+ "ORDER BY Name");
+			
+					st.setInt(1, clas.getId());
+					
+					rs = st.executeQuery();
+					
+					List<Hero> list = new ArrayList<>();
+					Map<Integer, Class> map = new HashMap<>();
+					
+					while (rs.next()) {
+						
+						Class cla = map.get(rs.getInt("ClassId"));
+						
+						if (cla == null) {
+							cla = instantiateClass(rs);
+							map.put(rs.getInt("ClassId"), cla);
+						}
+						
+
+						Hero hero = instantiateHero(rs, cla);
+						list.add(hero);
+					}
+					return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+		
 	}
 
 }

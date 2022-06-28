@@ -3,6 +3,7 @@ package model.dao;
 import java.util.List;
 
 import model.entities.Hero;
+import model.entities.Class;
 
 public interface HeroDao {
 
@@ -11,5 +12,6 @@ public interface HeroDao {
 	void deleteById(Integer id);
 	Hero findById(Integer id);
 	List<Hero> findAll();
+	List<Hero> findByDepartment(Class cla);
 	
 }
