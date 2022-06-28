@@ -12,7 +12,7 @@ public class Hero implements Serializable {
 	private Date createdDate;
 	private Double champLevel;
 	
-	private Class classId;
+	private Class whichClass;
 	
 	public Hero() {}
 
@@ -22,7 +22,7 @@ public class Hero implements Serializable {
 		this.login = login;
 		this.createdDate = createdDate;
 		this.champLevel = champLevel;
-		this.classId = classId;
+		this.whichClass = whichClass;
 	}
 
 	public Integer getId() {
@@ -65,12 +65,12 @@ public class Hero implements Serializable {
 		this.champLevel = champLevel;
 	}
 
-	public Class getClassId() {
-		return classId;
+	public Class getWhichClassId() {
+		return whichClass;
 	}
 
-	public void setClassId(Class classId) {
-		this.classId = classId;
+	public void setWhichClass(Class whichClass) {
+		this.whichClass = whichClass;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class Hero implements Serializable {
 	@Override
 	public String toString() {
 		return "Hero [id=" + id + ", name=" + name + ", login=" + login + ", createdDate=" + createdDate
-				+ ", champLevel=" + champLevel + ", classId=" + classId + "]";
+				+ ", champLevel=" + champLevel + ", whichClass=" + whichClass + "]";
 	}
 
 	
