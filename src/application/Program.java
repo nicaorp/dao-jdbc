@@ -32,10 +32,17 @@ public class Program {
 			System.out.println(h);
 		}
 		
-		System.out.println("=== Teste: Insert");
-		Hero newHero = new Hero(null, "Vibe", "vibe100", new Date(), 30.0, cla);
-		heroDao.insert(newHero);
-		System.out.println("Inserted! New Id: " + newHero.getId());
+//		System.out.println("\n=== Teste: Insert");
+//		Hero newHero = new Hero(null, "Vibe", "vibe100", new Date(), 30.0, cla);
+//		heroDao.insert(newHero);
+//		System.out.println("Inserted! New Id: " + newHero.getId());
+		
+		System.out.println("\n=== Teste: Update");
+		hero = heroDao.findById(1);
+		hero.setChampLevel(80.0);
+		heroDao.update(hero);
+		System.out.println(hero);
+		
 		
 	}
 

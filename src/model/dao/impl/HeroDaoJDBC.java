@@ -27,6 +27,7 @@ public class HeroDaoJDBC implements HeroDao {
 	
 	@Override
 	public void insert(Hero obj) {
+		
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
@@ -67,7 +68,33 @@ public class HeroDaoJDBC implements HeroDao {
 
 	@Override
 	public void update(Hero obj) {
-		// TODO Auto-generated method stub
+
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					 "UPDATE hero "
+					+ "SET Name = ?, login = ?, CreatedDate = ?, ChampLevel = ?, ClassId = ? "
+					+ "WHERE Id = ?");
+			
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getLogin());
+			st.setDate(3, new java.sql.Date(obj.getCreatedDate().getTime()));
+			st.setDouble(4, obj.getChampLevel());
+			st.setInt(5, obj.getWhichClassId().getId());
+			st.setInt(6, obj.getId());
+			
+			st.executeUpdate();
+			
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			
+		}
+
+		
 		
 	}
 
