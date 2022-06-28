@@ -96,8 +96,46 @@ public class HeroDaoJDBC implements HeroDao {
 
 	@Override
 	public List<Hero> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT hero.*, class.Name as ClassName "
+					+ "FROM hero INNER JOIN class "
+					+ "ON hero.ClassId = class.Id "
+					+ "ORDER BY Id");
+			
+					
+					
+					rs = st.executeQuery();
+					
+					List<Hero> list = new ArrayList<>();
+					Map<Integer, Class> map = new HashMap<>();
+					
+					while (rs.next()) {
+						
+						Class cla = map.get(rs.getInt("ClassId"));
+						
+						if (cla == null) {
+							cla = instantiateClass(rs);
+							map.put(rs.getInt("ClassId"), cla);
+						}
+						
+
+						Hero hero = instantiateHero(rs, cla);
+						list.add(hero);
+					}
+					return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+		
 	}
 
 
