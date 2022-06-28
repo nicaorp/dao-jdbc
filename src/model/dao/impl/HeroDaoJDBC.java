@@ -54,16 +54,8 @@ public class HeroDaoJDBC implements HeroDao {
 					
 					rs = st.executeQuery();
 					if (rs.next()) {
-						Class cla = new Class();
-						cla.setId(rs.getInt("ClassId"));
-						cla.setName(rs.getString("ClassName"));
-						Hero hero = new Hero();
-						hero.setId(rs.getInt("Id"));
-						hero.setName(rs.getString("Name"));
-						hero.setLogin(rs.getString("login"));
-						hero.setCreatedDate(rs.getDate("CreatedDate"));
-						hero.setChampLevel(rs.getDouble("ChampLevel"));
-						hero.setWhichClass(cla);
+						Class cla = instantiateClass(rs);
+						Hero hero = instantiateHero(rs, cla);
 						return hero;
 					}
 					return null;
@@ -78,6 +70,26 @@ public class HeroDaoJDBC implements HeroDao {
 		
 		
 	}
+
+	private Hero instantiateHero(ResultSet rs, Class cla) throws SQLException {
+		Hero hero = new Hero();
+		hero.setId(rs.getInt("Id"));
+		hero.setName(rs.getString("Name"));
+		hero.setLogin(rs.getString("login"));
+		hero.setCreatedDate(rs.getDate("CreatedDate"));
+		hero.setChampLevel(rs.getDouble("ChampLevel"));
+		hero.setWhichClass(cla);
+		return hero;
+	}
+
+
+	private Class instantiateClass(ResultSet rs) throws SQLException {
+		Class cla = new Class();
+		cla.setId(rs.getInt("ClassId"));
+		cla.setName(rs.getString("ClassName"));
+		return cla;
+	}
+
 
 	@Override
 	public List<Hero> findAll() {

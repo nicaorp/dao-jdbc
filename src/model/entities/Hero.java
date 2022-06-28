@@ -16,7 +16,7 @@ public class Hero implements Serializable {
 	
 	public Hero() {}
 
-	public Hero(Integer id, String name, String login, Date createdDate, Double champLevel, Class classId) {
+	public Hero(Integer id, String name, String login, Date createdDate, Double champLevel, Class whichClass) {
 		this.id = id;
 		this.name = name;
 		this.login = login;

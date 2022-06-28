@@ -11,8 +11,8 @@ public class Program {
 
 		HeroDao heroDao = DaoFactory.createHeroDao();
 		
+		System.out.println("=== Teste: Seller findById ===");
 		Hero hero = heroDao.findById(12);
-		
 		System.out.println(hero);
 	}
 
