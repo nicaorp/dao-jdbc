@@ -1,11 +1,13 @@
 package application;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import model.dao.DaoFactory;
 import model.dao.HeroDao;
-import model.entities.Hero;
 import model.entities.Class;
+import model.entities.Hero;
 
 public class Program {
 
@@ -29,6 +31,11 @@ public class Program {
 		for (Hero h : list) {
 			System.out.println(h);
 		}
+		
+		System.out.println("=== Teste: Insert");
+		Hero newHero = new Hero(null, "Vibe", "vibe100", new Date(), 30.0, cla);
+		heroDao.insert(newHero);
+		System.out.println("Inserted! New Id: " + newHero.getId());
 		
 	}
 
