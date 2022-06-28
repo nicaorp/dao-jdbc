@@ -100,7 +100,26 @@ public class HeroDaoJDBC implements HeroDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE from hero WHERE Id = ?");
+			
+			st.setInt(1, id);
+			
+			int rowsAffected = st.executeUpdate();
+			
+			if (rowsAffected == 0) {
+				throw new DbException("Id inválido.");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());			
+		}
+		finally {
+			DB.closeStatement(st);
+		}
+		
 		
 	}
 
